@@ -19,7 +19,7 @@ public class Sale : BaseEntity
     
     public bool IsCancelled { get; set; }
 
-    public decimal Amount => Items.Sum(item => item.Total);
+    public decimal Amount { get; set; }
 
     private readonly List<SaleItem> _items = new();
     public IReadOnlyCollection<SaleItem> Items => _items;
@@ -31,6 +31,8 @@ public class Sale : BaseEntity
         saleItem.Product.DecreaseStock(saleItem.Quantity);
 
         _items.Add(saleItem);
+
+        Amount = _items.Sum(item => item.Total);
     }
 
     public void RemoveItem(SaleItem item)
@@ -38,6 +40,8 @@ public class Sale : BaseEntity
         item.Product.IncreaseStock(item.Quantity);
 
         _items.Remove(item);
+        
+        Amount = _items.Sum(i => item.Total);
     }
 
     public void CancelSale()

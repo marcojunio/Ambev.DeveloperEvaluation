@@ -1,0 +1,54 @@
+﻿using Ambev.DeveloperEvaluation.Common.Extensions;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace Ambev.DeveloperEvaluation.ORM.Repositories;
+
+public class CompanyRepository : ICompanyRepository
+{
+    private readonly DefaultContext _defaultContext;
+
+    public CompanyRepository(DefaultContext defaultContext)
+    {
+        _defaultContext = defaultContext;
+    }
+
+    public async Task<Company> CreateAsync(Company data, CancellationToken cancellationToken = default)
+    {
+        await _defaultContext.Companies.AddAsync(data, cancellationToken);
+        await _defaultContext.SaveChangesAsync(cancellationToken);
+        return data;
+    }
+
+    public async Task<Company?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Companies.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Company data, CancellationToken cancellationToken = default)
+    {
+        _defaultContext.Companies.Update(data);
+        await _defaultContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var data = await GetByIdAsync(id, cancellationToken);
+        if (data == null)
+            return false;
+
+        _defaultContext.Companies.Remove(data);
+
+        await _defaultContext.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
+
+    public IQueryable<Company> SearchAsync(string sort)
+    {
+        return _defaultContext.Companies
+            .AsNoTracking()
+            .ApplyOrdering(sort);
+    }
+}

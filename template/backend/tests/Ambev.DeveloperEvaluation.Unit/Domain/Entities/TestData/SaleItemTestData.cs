@@ -3,7 +3,7 @@ using Bogus;
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
 
-public class SaleItemTestData
+public static class SaleItemTestData
 {
     private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
         .RuleFor(u => u.UserId, Guid.NewGuid)
