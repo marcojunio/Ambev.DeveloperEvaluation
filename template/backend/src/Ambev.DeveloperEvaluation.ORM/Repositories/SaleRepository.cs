@@ -26,10 +26,13 @@ public class SaleRepository : ISaleRepository
         return await _defaultContext.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
-    public async Task UpdateAsync(Sale data, CancellationToken cancellationToken = default)
+    public async Task<Sale?> UpdateAsync(Sale data, CancellationToken cancellationToken = default)
     {
         _defaultContext.Sales.Update(data);
+
         await _defaultContext.SaveChangesAsync(cancellationToken);
+
+        return await GetByIdAsync(data.Id, cancellationToken);
     }
 
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)

@@ -26,15 +26,19 @@ public class CompanyRepository : ICompanyRepository
         return await _defaultContext.Companies.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
-    public async Task UpdateAsync(Company data, CancellationToken cancellationToken = default)
+    public async Task<Company?> UpdateAsync(Company data, CancellationToken cancellationToken = default)
     {
         _defaultContext.Companies.Update(data);
+        
         await _defaultContext.SaveChangesAsync(cancellationToken);
+        
+        return await GetByIdAsync(data.Id,cancellationToken);
     }
 
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var data = await GetByIdAsync(id, cancellationToken);
+        
         if (data == null)
             return false;
 
@@ -50,5 +54,10 @@ public class CompanyRepository : ICompanyRepository
         return _defaultContext.Companies
             .AsNoTracking()
             .ApplyOrdering(sort);
+    }
+
+    public async Task<Company?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Companies.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
     }
 }

@@ -11,11 +11,6 @@ public sealed class AuthenticateUserResult
     public string Token { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the user's unique identifier
-    /// </summary>
-    public Guid Id { get; set; }
-
-    /// <summary>
     /// Gets or sets the user's name
     /// </summary>
     public string Name { get; set; } = string.Empty;

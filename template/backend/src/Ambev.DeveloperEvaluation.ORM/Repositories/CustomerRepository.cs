@@ -26,10 +26,13 @@ public class CustomerRepository : ICustomerRepository
         return await _defaultContext.Customers.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
-    public async Task UpdateAsync(Customer data, CancellationToken cancellationToken = default)
+    public async Task<Customer?> UpdateAsync(Customer data, CancellationToken cancellationToken = default)
     {
         _defaultContext.Customers.Update(data);
+        
         await _defaultContext.SaveChangesAsync(cancellationToken);
+        
+        return await GetByIdAsync(data.Id,cancellationToken);
     }
 
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -50,5 +53,10 @@ public class CustomerRepository : ICustomerRepository
         return _defaultContext.Customers
             .AsNoTracking()
             .ApplyOrdering(sort);
+    }
+
+    public async Task<Customer?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Customers.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
     }
 }

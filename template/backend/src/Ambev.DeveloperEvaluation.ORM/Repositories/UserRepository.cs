@@ -73,9 +73,12 @@ public class UserRepository : IUserRepository
         return true;
     }
     
-    public async Task UpdateAsync(User data, CancellationToken cancellationToken = default)
+    public async Task<User?> UpdateAsync(User data, CancellationToken cancellationToken = default)
     {
         _context.Users.Update(data);
+        
         await _context.SaveChangesAsync(cancellationToken);
+        
+        return await GetByIdAsync(data.Id,cancellationToken);
     }
 }
