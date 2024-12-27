@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.Application", "Ambev.DeveloperEvaluation.Application\Ambev.DeveloperEvaluation.Application.csproj", "{98DD776B-B8EA-46FD-A947-77EC2E5F2237}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.Common", "Ambev.DeveloperEvaluation.Common\Ambev.DeveloperEvaluation.Common.csproj", "{AE51C70D-16BE-4259-AD4B-7234426572AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.Domain", "Ambev.DeveloperEvaluation.Domain\Ambev.DeveloperEvaluation.Domain.csproj", "{122FD25C-BB8C-4DAA-869F-2C6A6030324E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.IoC", "Ambev.DeveloperEvaluation.IoC\Ambev.DeveloperEvaluation.IoC.csproj", "{DF969AE3-0CBD-4318-AC76-47D9791A6250}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.ORM", "Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj", "{33D75C86-C598-48D5-822E-81640FD1B8FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.WebApi", "Ambev.DeveloperEvaluation.WebApi\Ambev.DeveloperEvaluation.WebApi.csproj", "{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98DD776B-B8EA-46FD-A947-77EC2E5F2237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98DD776B-B8EA-46FD-A947-77EC2E5F2237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98DD776B-B8EA-46FD-A947-77EC2E5F2237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98DD776B-B8EA-46FD-A947-77EC2E5F2237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE51C70D-16BE-4259-AD4B-7234426572AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE51C70D-16BE-4259-AD4B-7234426572AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE51C70D-16BE-4259-AD4B-7234426572AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE51C70D-16BE-4259-AD4B-7234426572AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{122FD25C-BB8C-4DAA-869F-2C6A6030324E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{122FD25C-BB8C-4DAA-869F-2C6A6030324E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{122FD25C-BB8C-4DAA-869F-2C6A6030324E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{122FD25C-BB8C-4DAA-869F-2C6A6030324E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF969AE3-0CBD-4318-AC76-47D9791A6250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF969AE3-0CBD-4318-AC76-47D9791A6250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF969AE3-0CBD-4318-AC76-47D9791A6250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF969AE3-0CBD-4318-AC76-47D9791A6250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D75C86-C598-48D5-822E-81640FD1B8FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D75C86-C598-48D5-822E-81640FD1B8FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D75C86-C598-48D5-822E-81640FD1B8FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D75C86-C598-48D5-822E-81640FD1B8FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0991714-915E-432F-B764-719C6EDED56B}
+	EndGlobalSection
+EndGlobal
