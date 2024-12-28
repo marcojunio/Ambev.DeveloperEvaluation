@@ -7,12 +7,12 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class SaleItem : BaseEntity
 {
-    public Product Product { get; set; } = new();
+    public Product Product { get; set; } = null!;
 
     public Guid ProductId { get; set; }
-    public User User { get; set; } = new();
+    public User User { get; set; } = null!;
     public Guid UserId { get; set; }
-    public Sale Sale { get; set; } = new();
+    public Sale Sale { get; set; } = null!;
     public Guid SaleId { get; set; }
     
     public int Quantity { get; set; }

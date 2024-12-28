@@ -10,4 +10,9 @@ public record DeleteCompanyCommand : IRequest<DeleteCompanyResult>
     {
         Id = id;
     }
+
+    public DeleteCompanyCommand()
+    {
+        
+    }
 }

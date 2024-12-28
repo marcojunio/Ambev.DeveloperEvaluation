@@ -19,7 +19,7 @@ public class Customer : BaseEntity
     public int Age { get; set; } = 0;
 
     public Guid UserId { get; set; }
-    public User User { get; set; } = new();
+    public User User { get; set; } = null!;
     
     public ValidationResultDetail Validate()
     {

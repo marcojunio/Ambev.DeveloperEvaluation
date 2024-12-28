@@ -8,7 +8,7 @@ public class Company : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     public Guid UserId { get; set; }
-    public User User { get; set; } = new();
+    public User User { get; set; } = null!;
     public ValidationResultDetail Validate()
     {
         var validator = new CompanyValidator();

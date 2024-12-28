@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Product" />
     <Folder Include="Sale" />
   </ItemGroup>
 

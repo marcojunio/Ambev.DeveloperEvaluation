@@ -10,4 +10,9 @@ public record GetCompanyCommand : IRequest<GetCompanyResult>
     {
         Id = id;
     }
+
+    public GetCompanyCommand()
+    {
+        
+    }
 }

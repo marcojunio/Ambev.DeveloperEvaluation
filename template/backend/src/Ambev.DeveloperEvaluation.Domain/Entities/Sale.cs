@@ -10,11 +10,11 @@ public class Sale : BaseEntity
     
     public string SaleNumber { get;}
     
-    public Customer Customer { get; set; } = new();
+    public Customer Customer { get; set; } = null!;
     public Guid CustomerId { get; set; }
-    public Company SellingCompany { get; set; } = new();
+    public Company SellingCompany { get; set; } = null!;
     public Guid SellingCompanyId { get; set; }
-    public User User { get; set; } = new();
+    public User User { get; set; } = null!;
     public Guid UserId { get; set; }
     
     public bool IsCancelled { get; set; }

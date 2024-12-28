@@ -10,4 +10,9 @@ public record GetCustomerCommand : IRequest<GetCustomerResult>
     {
         Id = id;
     }
+
+    public GetCustomerCommand()
+    {
+        
+    }
 }

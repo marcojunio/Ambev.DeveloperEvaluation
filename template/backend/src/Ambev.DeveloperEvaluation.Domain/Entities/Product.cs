@@ -9,8 +9,8 @@ public class Product : BaseEntity
     public string Name { get; set; } = string.Empty;
     public decimal UnitPrice { get; set; } = 0;
     public Guid UserId { get; set; }
-    public User User { get; set; } = new();
-    
+    public User User { get; set; } = null!;
+
     public int StockQuantity { get; private set; } = 0;
     
     public ValidationResultDetail Validate()

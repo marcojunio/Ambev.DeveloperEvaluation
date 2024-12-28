@@ -54,4 +54,9 @@ public class ProductRepository : IProductRepository
             .AsNoTracking()
             .ApplyOrdering(sort);
     }
+
+    public async Task<Product?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Products.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
+    }
 }
