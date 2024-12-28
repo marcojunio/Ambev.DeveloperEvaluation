@@ -4,8 +4,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Customer.TestData;
 
 public static class GetCustomerHandlerTestData
 {
-    public static GetCustomerCommand GenerateValidCommand()
+    public static GetCustomerQuery GenerateValidCommand()
     {
-        return new GetCustomerCommand(Guid.NewGuid());
+        return new GetCustomerQuery(Guid.NewGuid());
     }
 }

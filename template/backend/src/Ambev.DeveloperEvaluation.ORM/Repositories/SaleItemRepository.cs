@@ -47,11 +47,4 @@ public class SaleItemRepository : ISaleItemRepository
 
         return true;
     }
-
-    public IQueryable<SaleItem> SearchAsync(string sort)
-    {
-        return _defaultContext.SaleItems
-            .AsNoTracking()
-            .ApplyOrdering(sort);
-    }
 }

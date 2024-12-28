@@ -48,15 +48,13 @@ public class CustomerRepository : ICustomerRepository
         return true;
     }
 
-    public IQueryable<Customer> SearchAsync(string sort)
-    {
-        return _defaultContext.Customers
-            .AsNoTracking()
-            .ApplyOrdering(sort);
-    }
-
     public async Task<Customer?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
     {
         return await _defaultContext.Customers.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
+    }
+
+    public async Task<bool> ExistCustomerAsync(Guid id,CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Customers.AnyAsync(f => f.Id == id, cancellationToken: cancellationToken);
     }
 }

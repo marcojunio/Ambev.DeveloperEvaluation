@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Application.Companies.GetCompany;
 
-public class GetCompanyValidator : AbstractValidator<GetCompanyCommand>
+public class GetCompanyValidator : AbstractValidator<GetCompanyQuery>
 {
     public GetCompanyValidator()
     {

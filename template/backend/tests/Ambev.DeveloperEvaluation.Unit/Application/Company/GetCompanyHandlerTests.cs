@@ -58,7 +58,7 @@ public class GetCompanyHandlerTests
     public async Task Should_insuccessfully_get_a_company()
     {
         //fact
-        var command = new GetCompanyCommand();
+        var command = new GetCompanyQuery();
 
         // When
         var act = () =>  _getCompanyHandler.Handle(command, CancellationToken.None);
@@ -71,7 +71,7 @@ public class GetCompanyHandlerTests
     public async Task Shouldnt_find_a_company()
     {
         //fact
-        var command = new GetCompanyCommand(Guid.NewGuid());
+        var command = new GetCompanyQuery(Guid.NewGuid());
         
         // When
         var act = async () => await _getCompanyHandler.Handle(command, CancellationToken.None);

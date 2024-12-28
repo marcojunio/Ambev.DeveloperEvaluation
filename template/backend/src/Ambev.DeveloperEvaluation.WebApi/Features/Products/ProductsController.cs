@@ -35,7 +35,7 @@ public class ProductsController : BaseController
     [Authorize]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateProductResult>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateProductRequest request,
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request,
         CancellationToken cancellationToken)
     {
         var validator = new CreateProductRequestValidator();
@@ -112,7 +112,7 @@ public class ProductsController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetProductCommand>(request);
+        var command = _mapper.Map<GetProductQuery>(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 

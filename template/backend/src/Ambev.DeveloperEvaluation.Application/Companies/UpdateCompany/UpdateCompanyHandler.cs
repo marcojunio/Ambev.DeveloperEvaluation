@@ -32,7 +32,12 @@ public class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommand, Update
         if (company is not null && company.Id != request.Id)
             throw new InvalidDomainOperation($"Company with name {request.Name} already exists");
 
-        var data = _mapper.Map<Company>(request);
+        var existingCompany = await _companyRepository.GetByIdAsync(request.Id, cancellationToken);
+        
+        if (existingCompany == null)
+            throw new NotFoundException($"Customer with ID {request.Id} not found.");
+        
+        var data = _mapper.Map(request,existingCompany);
         
         data.UpdateDate();
 

@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Application.Customers.GetCustomer;
 
-public class GetCustomerValidator : AbstractValidator<GetCustomerCommand>
+public class GetCustomerValidator : AbstractValidator<GetCustomerQuery>
 {
     public GetCustomerValidator()
     {

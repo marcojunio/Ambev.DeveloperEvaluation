@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Extensions;
+using Ambev.DeveloperEvaluation.Common.Pagination;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +17,40 @@ public class SaleRepository : ISaleRepository
 
     public async Task<Sale> CreateAsync(Sale data, CancellationToken cancellationToken = default)
     {
-        await _defaultContext.Sales.AddAsync(data, cancellationToken);
-        await _defaultContext.SaveChangesAsync(cancellationToken);
-        return data;
+        await using var transaction = await _defaultContext.Database.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            await _defaultContext.Sales.AddAsync(data, cancellationToken);
+
+            foreach (var item in data.Items)
+            {
+                item.SaleId = data.Id;
+
+                await _defaultContext.SaleItems.AddAsync(item, cancellationToken);
+            }
+
+            await _defaultContext.SaveChangesAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+
+            return data;
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+
+            throw;
+        }
     }
 
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _defaultContext.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        return await _defaultContext.Sales
+            .Include(f => f.Customer)
+            .Include(f => f.Items)
+                .ThenInclude(s => s.Product)
+            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
     public async Task<Sale?> UpdateAsync(Sale data, CancellationToken cancellationToken = default)
@@ -48,10 +75,16 @@ public class SaleRepository : ISaleRepository
         return true;
     }
 
-    public IQueryable<Sale> SearchAsync(string sort)
+    public async Task<PaginatedList<Sale>> SearchAsync(int pageNumber, int pageSize, string order,
+        CancellationToken cancellationToken = default)
     {
-        return _defaultContext.Sales
+        return await _defaultContext.Sales
+            .Include(f => f.Customer)
+            .Include(f => f.Items)
+            .ThenInclude(f => f.Product)
+            .AsSplitQuery()
             .AsNoTracking()
-            .ApplyOrdering(sort);
+            .ApplyOrdering(order)
+            .PaginateAsync(pageNumber, pageSize, cancellationToken: cancellationToken);
     }
 }

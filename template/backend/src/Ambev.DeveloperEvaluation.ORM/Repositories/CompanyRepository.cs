@@ -49,15 +49,13 @@ public class CompanyRepository : ICompanyRepository
         return true;
     }
 
-    public IQueryable<Company> SearchAsync(string sort)
-    {
-        return _defaultContext.Companies
-            .AsNoTracking()
-            .ApplyOrdering(sort);
-    }
-
     public async Task<Company?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
     {
         return await _defaultContext.Companies.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
+    }
+
+    public async Task<bool> ExistCompanyAsync(Guid id,CancellationToken cancellationToken = default)
+    {
+        return await _defaultContext.Companies.AnyAsync(f => f.Id == id, cancellationToken: cancellationToken);
     }
 }

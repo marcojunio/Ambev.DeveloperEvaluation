@@ -60,7 +60,7 @@ public class GetCustomerHandlerTests
     public async Task Should_insuccessfully_get_a_customer()
     {
         //fact
-        var command = new GetCustomerCommand();
+        var command = new GetCustomerQuery();
 
         // When
         var act = () =>  _getCustomerHandler.Handle(command, CancellationToken.None);
@@ -73,7 +73,7 @@ public class GetCustomerHandlerTests
     public async Task Shouldnt_find_a_customer()
     {
         //fact
-        var command = new GetCustomerCommand(Guid.NewGuid());
+        var command = new GetCustomerQuery(Guid.NewGuid());
         
         // When
         var act = async () => await _getCustomerHandler.Handle(command, CancellationToken.None);

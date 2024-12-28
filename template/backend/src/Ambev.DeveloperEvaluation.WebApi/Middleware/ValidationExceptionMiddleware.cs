@@ -8,10 +8,12 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
     public class ValidationExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ValidationExceptionMiddleware> _logger;
 
-        public ValidationExceptionMiddleware(RequestDelegate next)
+        public ValidationExceptionMiddleware(RequestDelegate next, ILogger<ValidationExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -22,6 +24,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
             }
             catch (ValidationException ex)
             {
+                
                 await HandleValidationExceptionAsync(context, ex);
             }
             catch (DomainException ex)
@@ -30,6 +33,8 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
             }
             catch (Exception ex)
             {
+                _logger.LogInformation("Error unexpected: {0}, INNER:{1}, MESSAGE:{2} ",ex.StackTrace,ex.InnerException,ex.Message);
+
                 await HandleException(context, ex);
             }
         }
@@ -80,7 +85,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
 
             return context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
         }
-        
+
         private static Task HandleDomainExceptionAsync(HttpContext context, DomainException exception)
         {
             context.Response.ContentType = "application/json";
@@ -94,7 +99,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
                 {
                     new()
                     {
-                       Error = exception.Message
+                        Error = exception.Message
                     }
                 }
             };

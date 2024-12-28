@@ -31,7 +31,12 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
         if (product is not null && product.Id != request.Id)
             throw new InvalidDomainOperation($"Product with name {request.Name} already exists");
 
-        var data = _mapper.Map<Domain.Entities.Product>(request);
+        var existingProduct = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        
+        if (existingProduct == null)
+            throw new NotFoundException($"Product with ID {request.Id} not found.");
+        
+        var data = _mapper.Map(request,existingProduct);
         
         data.UpdateDate();
 

@@ -18,8 +18,5 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
         RuleFor(product => product.StockQuantity)
             .NotEmpty()
             .GreaterThan(0);
-
-        RuleFor(company => company.UserId)
-            .NotEmpty();
     }
 }

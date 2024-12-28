@@ -35,7 +35,7 @@ public class CompaniesController : BaseController
     [Authorize]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateCompanyResult>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateCompanyRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateCompanyRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -111,7 +111,7 @@ public class CompaniesController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
         
-        var command = _mapper.Map<GetCompanyCommand>(request);
+        var command = _mapper.Map<GetCompanyQuery>(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 

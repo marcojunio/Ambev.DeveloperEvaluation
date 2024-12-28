@@ -2,16 +2,16 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Product.GetProduct;
 
-public record GetProductCommand : IRequest<GetProductResult>
+public record GetProductQuery : IRequest<GetProductResult>
 {
     public Guid Id { get; }
     
-    public GetProductCommand(Guid id)
+    public GetProductQuery(Guid id)
     {
         Id = id;
     }
 
-    public GetProductCommand()
+    public GetProductQuery()
     {
         
     }

@@ -8,7 +8,7 @@ public class GetCompanyProfile : Profile
 {
     public GetCompanyProfile()
     {
-        CreateMap<Guid, GetCompanyCommand>()
-            .ConstructUsing(id => new GetCompanyCommand(id));
+        CreateMap<Guid, GetCompanyQuery>()
+            .ConstructUsing(id => new GetCompanyQuery(id));
     }
 }

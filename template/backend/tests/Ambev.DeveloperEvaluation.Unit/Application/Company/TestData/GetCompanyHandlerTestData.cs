@@ -4,8 +4,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Company.TestData;
 
 public static class GetCompanyHandlerTestData
 {
-    public static GetCompanyCommand GenerateValidCommand()
+    public static GetCompanyQuery GenerateValidCommand()
     {
-        return new GetCompanyCommand(Guid.NewGuid());
+        return new GetCompanyQuery(Guid.NewGuid());
     }
 }

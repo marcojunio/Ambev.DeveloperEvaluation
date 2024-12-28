@@ -1,6 +1,9 @@
-﻿namespace Ambev.DeveloperEvaluation.Common.Infraestructure;
+﻿using Ambev.DeveloperEvaluation.Common.Pagination;
+
+namespace Ambev.DeveloperEvaluation.Common.Infraestructure;
 
 public interface ISearchData<T>
 {
-    IQueryable<T> SearchAsync(string sort);
+    Task<PaginatedList<T>> SearchAsync(int pageNumber, int pageSize, string order,
+        CancellationToken cancellationToken = default);
 }

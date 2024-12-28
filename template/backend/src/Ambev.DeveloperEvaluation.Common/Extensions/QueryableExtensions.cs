@@ -1,4 +1,6 @@
 ﻿using System.Linq.Expressions;
+using Ambev.DeveloperEvaluation.Common.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.Common.Extensions;
 
@@ -16,7 +18,7 @@ public static class QueryableExtensions
         {
             var orderParts = order.Split(' ');
 
-            if (orderParts.Length != 2 || 
+            if (orderParts.Length != 2 ||
                 (orderParts[1].ToLower() != "asc" && orderParts[1].ToLower() != "desc"))
                 throw new ArgumentException($"Invalid order format: {order}");
 
@@ -30,20 +32,34 @@ public static class QueryableExtensions
         return query!;
     }
 
-    private static IQueryable<T> ApplyOrder<T>(IQueryable<T>? query, string propertyName, bool ascending, bool isFirst)
+    private static IQueryable<T> ApplyOrder<T>(IQueryable<T>? query, string propertyPath, bool ascending, bool isFirst)
     {
         var parameter = Expression.Parameter(typeof(T), "x");
-        var property = Expression.Property(parameter, propertyName);
+        
+        var property = propertyPath.Split('.').Aggregate<string?, Expression>(parameter, Expression.PropertyOrField);
+
         var keySelector = Expression.Lambda(property, parameter);
 
         var methodName = isFirst
             ? ascending ? "OrderBy" : "OrderByDescending"
-            : ascending ? "ThenBy" : "ThenByDescending";
+            : ascending
+                ? "ThenBy"
+                : "ThenByDescending";
 
         var method = typeof(Queryable).GetMethods()
             .First(m => m.Name == methodName && m.GetParameters().Length == 2)
             .MakeGenericMethod(typeof(T), property.Type);
 
         return (IQueryable<T>)method.Invoke(null, new object[] { query, keySelector });
+    }
+
+    public static async Task<PaginatedList<T>> PaginateAsync<T>(this IQueryable<T> source, int pageNumber, int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        var count = await source.CountAsync(cancellationToken: cancellationToken);
+        var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+            .ToListAsync(cancellationToken: cancellationToken);
+        
+        return new PaginatedList<T>(items, count, pageNumber, pageSize);
     }
 }

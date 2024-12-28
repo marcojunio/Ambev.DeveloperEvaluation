@@ -2,16 +2,16 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Companies.GetCompany;
 
-public record GetCompanyCommand : IRequest<GetCompanyResult>
+public record GetCompanyQuery : IRequest<GetCompanyResult>
 {
     public Guid Id { get; }
     
-    public GetCompanyCommand(Guid id)
+    public GetCompanyQuery(Guid id)
     {
         Id = id;
     }
 
-    public GetCompanyCommand()
+    public GetCompanyQuery()
     {
         
     }

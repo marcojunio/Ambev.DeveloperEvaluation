@@ -35,7 +35,7 @@ public class CustomersController : BaseController
     [Authorize]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateCustomerResult>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateCustomerRequest request,
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request,
         CancellationToken cancellationToken)
     {
         var validator = new CreateCustomerRequestValidator();
@@ -112,7 +112,7 @@ public class CustomersController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetCustomerCommand>(request);
+        var command = _mapper.Map<GetCustomerQuery>(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 

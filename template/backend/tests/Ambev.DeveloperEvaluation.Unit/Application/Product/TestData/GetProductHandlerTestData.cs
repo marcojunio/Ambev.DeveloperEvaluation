@@ -4,8 +4,8 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Product.TestData;
 
 public static class GetProductHandlerTestData
 {
-    public static GetProductCommand GenerateValidCommand()
+    public static GetProductQuery GenerateValidCommand()
     {
-        return new GetProductCommand(Guid.NewGuid());
+        return new GetProductQuery(Guid.NewGuid());
     }
 }

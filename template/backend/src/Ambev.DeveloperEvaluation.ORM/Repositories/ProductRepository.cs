@@ -48,15 +48,19 @@ public class ProductRepository : IProductRepository
         return true;
     }
 
-    public IQueryable<Product> SearchAsync(string sort)
-    {
-        return _defaultContext.Products
-            .AsNoTracking()
-            .ApplyOrdering(sort);
-    }
-
     public async Task<Product?> GetByNameAsync(Guid userId, string name, CancellationToken cancellationToken = default)
     {
         return await _defaultContext.Products.FirstOrDefaultAsync(c => c.UserId == userId && c.Name ==  name, cancellationToken: cancellationToken);
+    }
+
+    public async Task<List<Product>> GetProductsByIds(Guid userId, List<Guid>? productIds,CancellationToken cancellationToken = default)
+    {
+        if (productIds is null || productIds.Count == 0)
+            return await Task.FromResult(new List<Product>());
+        
+        return await _defaultContext
+            .Products
+            .Where(f => productIds.Contains(f.Id))
+            .ToListAsync(cancellationToken: cancellationToken);
     }
 }

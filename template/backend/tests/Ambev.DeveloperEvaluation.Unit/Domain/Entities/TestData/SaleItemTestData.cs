@@ -39,7 +39,7 @@ public static class SaleItemTestData
             Product = product
         };
         
-        sale.ApplyDiscount(new Faker().Random.Decimal(0.1m));
+        sale.ApplyDiscount();
 
         return sale;
     }

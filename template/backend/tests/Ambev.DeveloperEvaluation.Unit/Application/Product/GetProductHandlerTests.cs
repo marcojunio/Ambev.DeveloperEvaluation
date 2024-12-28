@@ -63,7 +63,7 @@ public class GetProductHandlerTests
     public async Task Should_insuccessfully_get_a_product()
     {
         //fact
-        var command = new GetProductCommand();
+        var command = new GetProductQuery();
 
         // When
         var act = () =>  _getProductHandler.Handle(command, CancellationToken.None);
@@ -76,7 +76,7 @@ public class GetProductHandlerTests
     public async Task Shouldnt_find_a_product()
     {
         //fact
-        var command = new GetProductCommand(Guid.NewGuid());
+        var command = new GetProductQuery(Guid.NewGuid());
         
         // When
         var act = async () => await _getProductHandler.Handle(command, CancellationToken.None);

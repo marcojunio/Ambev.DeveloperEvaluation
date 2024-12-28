@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Product.GetProduct;
 
-public class GetProductHandler : IRequestHandler<GetProductCommand, GetProductResult>
+public class GetProductHandler : IRequestHandler<GetProductQuery, GetProductResult>
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ public class GetProductHandler : IRequestHandler<GetProductCommand, GetProductRe
         _mapper = mapper;
     }
 
-    public async Task<GetProductResult> Handle(GetProductCommand request, CancellationToken cancellationToken)
+    public async Task<GetProductResult> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
         var validator = new GetProductValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);

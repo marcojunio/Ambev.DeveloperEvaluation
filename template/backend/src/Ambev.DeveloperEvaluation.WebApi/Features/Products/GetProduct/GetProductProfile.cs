@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Customers.GetCustomer;
+﻿using Ambev.DeveloperEvaluation.Application.Product.GetProduct;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
@@ -7,7 +7,7 @@ public class GetProductProfile : Profile
 {
     public GetProductProfile()
     {
-        CreateMap<Guid, GetCustomerCommand>()
-            .ConstructUsing(id => new GetCustomerCommand(id));
+        CreateMap<Guid, GetProductQuery>()
+            .ConstructUsing(id => new GetProductQuery(id));
     }
 }

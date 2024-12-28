@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Companies.GetCompany;
 
-public class GetCompanyHandler : IRequestHandler<GetCompanyCommand, GetCompanyResult>
+public class GetCompanyHandler : IRequestHandler<GetCompanyQuery, GetCompanyResult>
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ public class GetCompanyHandler : IRequestHandler<GetCompanyCommand, GetCompanyRe
         _mapper = mapper;
     }
 
-    public async Task<GetCompanyResult> Handle(GetCompanyCommand request, CancellationToken cancellationToken)
+    public async Task<GetCompanyResult> Handle(GetCompanyQuery request, CancellationToken cancellationToken)
     {
         var validator = new GetCompanyValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);

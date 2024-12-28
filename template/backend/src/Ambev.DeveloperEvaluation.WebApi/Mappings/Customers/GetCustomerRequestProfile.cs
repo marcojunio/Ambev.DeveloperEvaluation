@@ -8,6 +8,6 @@ public class GetCustomerRequestProfile : Profile
 {
     public GetCustomerRequestProfile()
     {
-        CreateMap<GetCustomerRequest, GetCustomerCommand>();
+        CreateMap<GetCustomerRequest, GetCustomerQuery>();
     }
 }

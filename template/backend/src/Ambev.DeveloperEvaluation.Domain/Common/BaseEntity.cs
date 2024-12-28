@@ -1,5 +1,4 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
-using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Common;
 
@@ -7,7 +6,8 @@ public class BaseEntity : IComparable<BaseEntity>
 {
     protected BaseEntity()
     {
-        CreatedAt = DateTime.UtcNow;
+        if (CreatedAt == default)
+            CreatedAt = DateTime.UtcNow;
     }
     
     public Guid Id { get; set; }
@@ -15,7 +15,7 @@ public class BaseEntity : IComparable<BaseEntity>
     /// <summary>
     /// Gets the date and time when the client was created.
     /// </summary>
-    public DateTime CreatedAt { get; protected set; }
+    public DateTime CreatedAt { get; private set; }
 
     /// <summary>
     /// Gets the date and time of the last update to the client's information.

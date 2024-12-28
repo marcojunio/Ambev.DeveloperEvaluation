@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
+using Ambev.DeveloperEvaluation.Domain.Services.Discount;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
@@ -19,16 +20,8 @@ public class SaleItem : BaseEntity
     public decimal UnitPrice { get; set; }
     public decimal? Discount { get; private set; }
     public decimal Total { get; private set; }
-  
 
-    public void ApplyDiscount(decimal discountPercentage)
-    {
-        if(discountPercentage is 0 or > 1)
-            return;
-        
-        Discount = discountPercentage;
-        Total = Quantity * UnitPrice * (1 - Discount.GetValueOrDefault(0));
-    }
+  
     
     public ValidationResultDetail Validate()
     {
@@ -41,8 +34,20 @@ public class SaleItem : BaseEntity
         };
     }
 
+    public void ApplyDiscount()
+    {
+        var discountStrategy = DiscountStrategyFactory.GetStrategy(this);
+        Discount = discountStrategy.CalculateDiscount(this);
+        UnitPrice = Product.UnitPrice;
+        
+        Total = Quantity * UnitPrice * (1 - Discount.GetValueOrDefault(0));
+    }
+    
     public void CanSale()
     {
+        if (Quantity > 20)
+            throw new InvalidDomainOperation("Cannot sell more than 20 identical items.");
+        
         if (Product.StockQuantity == 0)
             throw new ProductOutOfStockException($"Product {Product.Name} out of stock.");
         

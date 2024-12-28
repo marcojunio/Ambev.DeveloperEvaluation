@@ -68,7 +68,7 @@ public class SaleItemTests
         saleItem.Product = product;
         
         //Act
-        saleItem.ApplyDiscount(0.15m);
+        saleItem.ApplyDiscount();
         
         // Assert
         Assert.Equal(85,saleItem.Total);

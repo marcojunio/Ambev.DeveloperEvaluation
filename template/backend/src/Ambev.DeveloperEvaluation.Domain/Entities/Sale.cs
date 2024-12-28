@@ -7,48 +7,47 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class Sale : BaseEntity
 {
     public Sale() => SaleNumber = Guid.NewGuid().ToString()[..16].ToUpper().Replace("-", "");
-    
-    public string SaleNumber { get;}
-    
+
+    public string SaleNumber { get; set; }
+
     public Customer Customer { get; set; } = null!;
     public Guid CustomerId { get; set; }
     public Company SellingCompany { get; set; } = null!;
     public Guid SellingCompanyId { get; set; }
     public User User { get; set; } = null!;
     public Guid UserId { get; set; }
-    
+
     public bool IsCancelled { get; set; }
 
-    public decimal Amount { get; set; }
 
     private readonly List<SaleItem> _items = new();
     public IReadOnlyCollection<SaleItem> Items => _items;
+    public decimal Amount { get; set; }
 
     public void AddItem(SaleItem saleItem)
     {
-        saleItem.CanSale();
-
-        saleItem.Product.DecreaseStock(saleItem.Quantity);
-
         _items.Add(saleItem);
 
-        Amount = _items.Sum(item => item.Total);
+        CalculateAmount();
     }
 
     public void RemoveItem(SaleItem item)
     {
-        item.Product.IncreaseStock(item.Quantity);
-
         _items.Remove(item);
-        
-        Amount = _items.Sum(i => item.Total);
+
+        CalculateAmount();
+    }
+
+    public void CalculateAmount()
+    {
+        Amount = _items.Sum(item => item.Total);
     }
 
     public void CancelSale()
     {
         IsCancelled = true;
     }
-    
+
     public ValidationResultDetail Validate()
     {
         var validator = new SaleValidator();

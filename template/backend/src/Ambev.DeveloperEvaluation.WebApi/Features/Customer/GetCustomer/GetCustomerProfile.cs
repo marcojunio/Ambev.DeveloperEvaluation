@@ -7,7 +7,7 @@ public class GetCustomerProfile : Profile
 {
     public GetCustomerProfile()
     {
-        CreateMap<Guid, GetCustomerCommand>()
-            .ConstructUsing(id => new GetCustomerCommand(id));
+        CreateMap<Guid, GetCustomerQuery>()
+            .ConstructUsing(id => new GetCustomerQuery(id));
     }
 }

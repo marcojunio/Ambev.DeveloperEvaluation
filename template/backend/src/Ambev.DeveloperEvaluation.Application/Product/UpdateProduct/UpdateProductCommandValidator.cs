@@ -6,7 +6,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 {
     public UpdateProductCommandValidator()
     {
-        RuleFor(customer => customer.Name)
+        RuleFor(product => product.Name)
             .NotEmpty()
             .MinimumLength(6)
             .MaximumLength(50);
@@ -19,7 +19,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
             .NotEmpty()
             .GreaterThan(0);
 
-        RuleFor(company => company.UserId)
+        RuleFor(product => product.UserId)
             .NotEmpty();
     }
 }
