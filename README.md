@@ -12,7 +12,7 @@ Repositories abstract the interaction with the database, encapsulating the logic
 
 
 ### CQRS (Command Query Responsibility Segregation)
-The application uses CQRS to separate the responsibilities of reading and writing data. Write operations (commands) and read operations (queries) are handled independently, allowing for better performance, scalability, and flexibility. This also simplifies the management of complex business logic, like applying discounts and calculating sale totals.
+The application uses CQRS to separate the responsibilities of reading and writing data. Write operations (commands) and read operations (queries) are handled independently, allowing for better performance, scalability, and flexibility. This also simplifies the management of complex business logic.
 
 Commands: Handled by command handlers, which are responsible for executing business logic (e.g., creating or updating sales).
 Queries: Handled by query handlers, optimized for reading data, ensuring quick retrieval of sale and customer information.
