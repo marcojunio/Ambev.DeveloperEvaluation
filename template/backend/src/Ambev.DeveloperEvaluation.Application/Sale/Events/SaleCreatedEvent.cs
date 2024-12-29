@@ -1,12 +1,25 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Events;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sale.Events;
 
-public record SaleCreatedEvent(Domain.Entities.Sale Sale) : IDomainEvent;
+public class SaleCreatedEvent: IEvent, INotification
+{
+    public SaleCreatedEvent(Domain.Entities.Sale sale,DateTime eventDate)
+    {
+        EventName = GetType().Name;
+        Sale = sale;
+        EventDate = eventDate;
+    }
+    public Domain.Entities.Sale Sale { get; set; }
+    public string EventName { get; }
+    public DateTime EventDate { get; }
+};
 
-public class SaleCreatedEventHandler : IDomainEventHandler<SaleCreatedEvent>
+public class SaleCreatedEventHandler : INotificationHandler<SaleCreatedEvent>
 {
     private readonly ILogger<SaleCreatedEventHandler> _logger;
     private readonly ICacheService _cacheService;
@@ -20,7 +33,7 @@ public class SaleCreatedEventHandler : IDomainEventHandler<SaleCreatedEvent>
     public async Task Handle(SaleCreatedEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation(
-            "Here we can publish to queues, using rabbitmq or kakfa or do some processing decoupled from the sales context. ID SALE {0}",
+            "ID SALE {0}",
             notification.Sale.Id);
 
         await _cacheService.RemoveAsync(CacheKeys.GetSaleKey(notification.Sale.Id));

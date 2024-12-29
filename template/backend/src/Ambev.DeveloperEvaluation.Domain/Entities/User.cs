@@ -25,9 +25,6 @@ public class User : BaseEntity, IUser
     /// </summary>
     public string Email { get; set; } = string.Empty;
     
-    public ICollection<Company> Companies = new List<Company>();
-    public ICollection<Customer> Customers = new List<Customer>();
-    public ICollection<Product> Products = new List<Product>();
     public ICollection<SaleItem> SaleItems = new List<SaleItem>();
     public ICollection<Sale> Sales = new List<Sale>();
 

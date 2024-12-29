@@ -33,7 +33,7 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
 
         await _saleRepository.UpdateAsync(sale, cancellationToken);
 
-        await _mediator.Publish(new SaleCancelledEvent(sale), cancellationToken);
+        await _mediator.Publish(new SaleCancelledEvent(sale,DateTime.UtcNow), cancellationToken);
 
         return new CancelSaleResult
         {

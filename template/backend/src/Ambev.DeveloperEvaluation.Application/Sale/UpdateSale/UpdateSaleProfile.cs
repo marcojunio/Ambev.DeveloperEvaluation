@@ -14,7 +14,6 @@ public class UpdateSaleProfile : Profile
         CreateMap<SaleItemUpdateDto, SaleItem>();
 
         CreateMap<Domain.Entities.Sale, UpdateSaleResult>()
-            .ForMember(d => d.SaleItems, member => member.MapFrom(f => f.Items))
-            .ForMember(d => d.CustomerName, member => member.MapFrom(f => f.Customer.Name));
+            .ForMember(d => d.SaleItems, member => member.MapFrom(f => f.Items));
     }
 }

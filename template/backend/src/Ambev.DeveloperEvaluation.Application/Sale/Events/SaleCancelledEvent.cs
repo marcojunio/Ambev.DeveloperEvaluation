@@ -1,11 +1,25 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Events;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sale.Events;
 
-public record SaleCancelledEvent(Domain.Entities.Sale Sale) : IDomainEvent;
+public class SaleCancelledEvent : IEvent, INotification
+{
+    public SaleCancelledEvent(Domain.Entities.Sale sale, DateTime eventDate)
+    {
+        EventName = GetType().Name;
+        Sale = sale;
+        EventDate = eventDate;
+    }
 
-public class SaleCancelledEventHandler : IDomainEventHandler<SaleCancelledEvent>
+    public Domain.Entities.Sale Sale { get; set; }
+    public string EventName { get; }
+    public DateTime EventDate { get; }
+};
+
+public class SaleCancelledEventHandler : INotificationHandler<SaleCancelledEvent>
 {
     private readonly ILogger<SaleCancelledEventHandler> _logger;
 
@@ -16,8 +30,10 @@ public class SaleCancelledEventHandler : IDomainEventHandler<SaleCancelledEvent>
 
     public async Task Handle(SaleCancelledEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Here we can publish to queues, using rabbitmq or kakfa or do some processing decoupled from the sales context. ID SALE {0}", notification.Sale.Id);
-        
+        _logger.LogInformation(
+            "ID SALE {0}",
+            notification.Sale.Id);
+
         await Task.FromResult(true);
     }
 }

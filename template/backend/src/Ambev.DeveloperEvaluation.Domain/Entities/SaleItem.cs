@@ -8,8 +8,6 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class SaleItem : BaseEntity
 {
-    public Product Product { get; set; } = null!;
-
     public Guid ProductId { get; set; }
     public User User { get; set; } = null!;
     public Guid UserId { get; set; }
@@ -38,7 +36,6 @@ public class SaleItem : BaseEntity
     {
         var discountStrategy = DiscountStrategyFactory.GetStrategy(this);
         Discount = discountStrategy.CalculateDiscount(this);
-        UnitPrice = Product.UnitPrice;
         
         Total = Quantity * UnitPrice * (1 - Discount.GetValueOrDefault(0));
     }
@@ -47,11 +44,13 @@ public class SaleItem : BaseEntity
     {
         if (Quantity > 20)
             throw new InvalidDomainOperation("Cannot sell more than 20 identical items.");
-        
-        if (Product.StockQuantity == 0)
-            throw new ProductOutOfStockException($"Product {Product.Name} out of stock.");
-        
-        if (Product.StockQuantity < Quantity)
-            throw new ProductOutOfStockException($"Quantity requested above available ({Product.StockQuantity})");
+    }
+    
+    public void CancelSale()
+    {
+        Quantity = 0;
+        UnitPrice = 0;
+        Discount = 0;
+        Total = 0;
     }
 }

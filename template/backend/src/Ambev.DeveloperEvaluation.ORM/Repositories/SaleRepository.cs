@@ -47,9 +47,7 @@ public class SaleRepository : ISaleRepository
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _defaultContext.Sales
-            .Include(f => f.Customer)
-            .Include(f => f.Items)
-                .ThenInclude(s => s.Product)
+            .Include(s => s.Items)
             .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
@@ -80,9 +78,7 @@ public class SaleRepository : ISaleRepository
     {
         return await _defaultContext.Sales
             .Where(s => s.UserId == userId)
-            .Include(f => f.Customer)
             .Include(f => f.Items)
-            .ThenInclude(f => f.Product)
             .AsSplitQuery()
             .AsNoTracking()
             .ApplyOrdering(order)

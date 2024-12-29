@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.WebApi", "Ambev.DeveloperEvaluation.WebApi\Ambev.DeveloperEvaluation.WebApi.csproj", "{4E3E1670-9B71-4CC0-9C3A-8A9189BB4274}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7510}") = "Ambev.DeveloperEvaluation.MessagingBroker", "Ambev.DeveloperEvaluation.MessagingBroker\Ambev.DeveloperEvaluation.MessagingBroker.csproj", "{4E3E1670-9B71-4CC0-9C3A-8A9189BB4285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{33D75C86-C598-48D5-822E-81640FD1B8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D75C86-C598-48D5-822E-81640FD1B8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D75C86-C598-48D5-822E-81640FD1B8FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3E1670-9B71-4CC0-9C3A-8A9189BB4285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

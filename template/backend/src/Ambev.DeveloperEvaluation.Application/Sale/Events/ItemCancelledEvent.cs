@@ -1,12 +1,27 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Common;
+﻿using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sale.Events;
 
-public record ItemCancelledEvent(Domain.Entities.Sale SaleExisting, Domain.Entities.Sale SaleUpdated) : IDomainEvent;
+public class ItemCancelledEvent : IEvent , INotification
+{
+    public ItemCancelledEvent(Domain.Entities.Sale saleExisting, Domain.Entities.Sale saleUpdated, DateTime eventDate)
+    {
+        SaleExisting = saleExisting;
+        SaleUpdated = saleUpdated;
+        EventName = GetType().Name;
+        EventDate = eventDate;
+    }
 
-public class ItemCancelledEventHandler : IDomainEventHandler<ItemCancelledEvent>
+    public Domain.Entities.Sale SaleExisting { get; set; }
+    public Domain.Entities.Sale SaleUpdated { get; set; }
+    public string EventName { get; }
+    public DateTime EventDate { get; }
+}
+
+public class ItemCancelledEventHandler : INotificationHandler<ItemCancelledEvent>
 {
     private readonly ISaleItemRepository _saleItemRepository;
     private readonly ILogger<ItemCancelledEventHandler> _logger;
@@ -19,8 +34,7 @@ public class ItemCancelledEventHandler : IDomainEventHandler<ItemCancelledEvent>
 
     public async Task Handle(ItemCancelledEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation(
-            "Here we can publish to queues, using rabbitmq or kakfa or do some processing decoupled from the sales context. ID SALE {0}",
+        _logger.LogInformation("ID SALE {0}",
             notification.SaleUpdated.Id);
 
         await RemoveDeletedItems(notification.SaleExisting, notification.SaleUpdated, cancellationToken);
