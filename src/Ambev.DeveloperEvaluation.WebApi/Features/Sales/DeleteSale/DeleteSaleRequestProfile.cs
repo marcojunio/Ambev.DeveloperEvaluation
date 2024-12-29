@@ -1,8 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.DeleteSale;
-using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Mappings.Sales;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
 
 public class DeleteSaleRequestProfile : Profile
 {

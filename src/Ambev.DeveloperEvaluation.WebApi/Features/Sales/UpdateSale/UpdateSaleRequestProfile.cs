@@ -1,8 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.UpdateSale;
-using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Mappings.Sales;
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 
 public class UpdateSaleRequestProfile : Profile
 {
