@@ -27,9 +27,9 @@ public class DeleteSaleHandler : IRequestHandler<DeleteSaleCommand, DeleteSaleRe
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        //var success = await _saleRepository.DeleteAsync(request.Id, cancellationToken);
+        var success = await _saleRepository.DeleteAsync(request.Id, cancellationToken);
 
-        if (!true)
+        if (!success)
             throw new InvalidDomainOperation($"Sale with ID {request.Id} not found");
 
         await _eventPublisher.PublishEventAsync(new SaleDeletedEvent(request.Id, request.UserId, DateTime.UtcNow), cancellationToken);

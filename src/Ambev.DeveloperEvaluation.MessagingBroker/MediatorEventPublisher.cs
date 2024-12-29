@@ -9,6 +9,14 @@ public class MediatorEventPublisher : IEventPublisher
 {
     private readonly IMessageService _messageService;
     private readonly IMediator _mediator;
+    
+    private static readonly JsonSerializerSettings _serializerOptions = new()
+    {
+        NullValueHandling = NullValueHandling.Ignore,
+        DefaultValueHandling = DefaultValueHandling.Ignore,
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
 
     public MediatorEventPublisher(IMessageService messageService,
         IMediator mediator)
@@ -24,6 +32,6 @@ public class MediatorEventPublisher : IEventPublisher
 
 
         //publish events for external services
-        await _messageService.SendMessageAsync(JsonConvert.SerializeObject(eventToPublish), cancellationToken);
+        await _messageService.SendMessageAsync(JsonConvert.SerializeObject(eventToPublish,_serializerOptions), cancellationToken);
     }
 }

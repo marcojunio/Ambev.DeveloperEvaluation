@@ -1,5 +1,4 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Cache;
-using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -37,6 +36,7 @@ public class SaleCreatedEventHandler : INotificationHandler<SaleCreatedEvent>
             notification.Sale.Id);
 
         await _cacheService.RemoveAsync(CacheKeys.GetSaleKey(notification.Sale.Id));
+        
         await _cacheService.RemoveAllPrefixAsync(CacheKeys.GetAllSalesPrefix(notification.Sale.UserId));
     }
 }

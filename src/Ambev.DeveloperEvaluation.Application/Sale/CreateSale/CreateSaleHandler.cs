@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.Events;
 using Ambev.DeveloperEvaluation.Domain.Dtos;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;
@@ -11,13 +12,14 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
+    private readonly IEventPublisher _eventPublisher;
 
-    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper,IMediator mediator)
+    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper,
+        IEventPublisher eventPublisher)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
-        _mediator = mediator;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
@@ -29,11 +31,11 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
         var data = _mapper.Map<Domain.Entities.Sale>(request);
 
         data.VerifyItemsAndApplyCalculate();
-        
+
         var createdSale = await _saleRepository.CreateAsync(data, cancellationToken);
 
-        await _mediator.Publish(new SaleCreatedEvent(data,DateTime.UtcNow), cancellationToken);
-        
+        await _eventPublisher.PublishEventAsync(new SaleCreatedEvent(data, DateTime.UtcNow), cancellationToken);
+
         return _mapper.Map<CreateSaleResult>(createdSale);
     }
 
@@ -49,7 +51,8 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
     {
         var aggregatedItems = command.SaleItems
             .GroupBy(item => item.ProductId)
-            .Select(group => new SaleItemDto(group.Key, group.Sum(item => item.Quantity),group.Sum(item => item.UnitPrice)))
+            .Select(group =>
+                new SaleItemDto(group.Key, group.Sum(item => item.Quantity), group.Sum(item => item.UnitPrice)))
             .ToList();
 
         command.SaleItems = aggregatedItems;

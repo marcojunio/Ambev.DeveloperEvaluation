@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Sale.Events;
 using Ambev.DeveloperEvaluation.Domain.Dtos;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using Bogus;
@@ -14,15 +15,16 @@ public class CreateSaleHandlerTests
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
     private readonly CreateSaleHandler _handler;
+    private readonly IEventPublisher _eventPublisher;
 
     public CreateSaleHandlerTests()
     {
         _saleRepository = Substitute.For<ISaleRepository>();
         _mapper = Substitute.For<IMapper>();
-        _mediator = Substitute.For<IMediator>();
-        _handler = new CreateSaleHandler(_saleRepository, _mapper, _mediator);
+        _eventPublisher = Substitute.For<IEventPublisher>();
+        
+        _handler = new CreateSaleHandler(_saleRepository, _mapper,_eventPublisher);
     }
 
     [Fact]
@@ -62,7 +64,7 @@ public class CreateSaleHandlerTests
         // Assert
         Assert.Equal(saleResult.Id, result.Id);
         await _saleRepository.Received(1).CreateAsync(Arg.Any<DeveloperEvaluation.Domain.Entities.Sale>(), CancellationToken.None);
-        await _mediator.Received(1).Publish(Arg.Any<SaleCreatedEvent>(), CancellationToken.None);
+        await _eventPublisher.Received(1).PublishEventAsync(Arg.Any<SaleCreatedEvent>(), CancellationToken.None);
     }
 
     [Fact]
@@ -80,7 +82,7 @@ public class CreateSaleHandlerTests
         // Act & Assert
         await Assert.ThrowsAsync<FluentValidation.ValidationException>(() => _handler.Handle(command, CancellationToken.None));
         await _saleRepository.DidNotReceive().CreateAsync(Arg.Any<DeveloperEvaluation.Domain.Entities.Sale>(), CancellationToken.None);
-        await _mediator.DidNotReceive().Publish(Arg.Any<SaleCreatedEvent>(), CancellationToken.None);
+        await _eventPublisher.DidNotReceive().PublishEventAsync(Arg.Any<SaleCreatedEvent>(), CancellationToken.None);
     }
 
     [Fact]

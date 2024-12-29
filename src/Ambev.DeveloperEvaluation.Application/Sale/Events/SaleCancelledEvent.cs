@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Common;
+﻿using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,10 +22,12 @@ public class SaleCancelledEvent : IEvent, INotification
 public class SaleCancelledEventHandler : INotificationHandler<SaleCancelledEvent>
 {
     private readonly ILogger<SaleCancelledEventHandler> _logger;
+    private readonly ICacheService _cacheService;
 
-    public SaleCancelledEventHandler(ILogger<SaleCancelledEventHandler> logger)
+    public SaleCancelledEventHandler(ILogger<SaleCancelledEventHandler> logger, ICacheService cacheService)
     {
         _logger = logger;
+        _cacheService = cacheService;
     }
 
     public async Task Handle(SaleCancelledEvent notification, CancellationToken cancellationToken)
@@ -34,6 +36,8 @@ public class SaleCancelledEventHandler : INotificationHandler<SaleCancelledEvent
             "ID SALE {0}",
             notification.Sale.Id);
 
-        await Task.FromResult(true);
+        await _cacheService.RemoveAsync(CacheKeys.GetSaleKey(notification.Sale.Id));
+        
+        await _cacheService.RemoveAllPrefixAsync(CacheKeys.GetAllSalesPrefix(notification.Sale.UserId));
     }
 }

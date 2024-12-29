@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.Events;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -12,13 +13,13 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
+    private readonly IEventPublisher _eventPublisher;
 
-    public UpdateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IMediator mediator)
+    public UpdateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IMediator mediator, IEventPublisher eventPublisher)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
-        _mediator = mediator;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<UpdateSaleResult> Handle(UpdateSaleCommand request, CancellationToken cancellationToken)
@@ -40,11 +41,11 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
 
         var updatedSale = await _saleRepository.UpdateAsync(data, cancellationToken);
 
-        await _mediator.Publish(new SaleModifiedEvent(existingSale,DateTime.UtcNow), cancellationToken);
+        await _eventPublisher.PublishEventAsync(new SaleModifiedEvent(existingSale,DateTime.UtcNow), cancellationToken);
         
         
         if(updatedSale is not null)
-            await _mediator.Publish(new ItemCancelledEvent(existingSale, updatedSale,DateTime.UtcNow), cancellationToken);
+            await _eventPublisher.PublishEventAsync(new ItemCancelledEvent(existingSale, updatedSale,DateTime.UtcNow), cancellationToken);
 
         return _mapper.Map<UpdateSaleResult>(updatedSale);
     }

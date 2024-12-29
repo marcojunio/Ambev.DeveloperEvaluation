@@ -1,5 +1,4 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Cache;
-using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
