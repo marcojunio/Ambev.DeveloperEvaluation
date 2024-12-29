@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Customers.GetCustomer;
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Customer.TestData;
@@ -20,7 +21,7 @@ public class GetCustomerHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _customerRepository = Substitute.For<ICustomerRepository>();
-        _getCustomerHandler = new GetCustomerHandler(_customerRepository, _mapper);
+        _getCustomerHandler = new GetCustomerHandler(_customerRepository, _mapper,Substitute.For<ICacheService>());
     }
     
     

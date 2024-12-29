@@ -7,7 +7,6 @@ public class DeleteSaleProfile : Profile
 {
     public DeleteSaleProfile()
     {
-        CreateMap<Guid, DeleteSaleCommand>()
-            .ConstructUsing(id => new DeleteSaleCommand(id));
+        CreateMap<DeleteSaleRequest, DeleteSaleCommand>();
     }
 }

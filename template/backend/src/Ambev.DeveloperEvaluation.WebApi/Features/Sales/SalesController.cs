@@ -75,7 +75,7 @@ public class SalesController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteSale([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var request = new DeleteSaleRequest(id);
+        var request = new DeleteSaleRequest(id,new Guid(GetCurrentUserId()));
 
         var validator = new DeleteSaleRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -191,7 +191,7 @@ public class SalesController : BaseController
     [ProducesResponseType(typeof(PaginatedResponse<GetListSaleResult>), StatusCodes.Status200OK)]
     public async Task<IActionResult> SearchAsync([FromQuery] int? page,[FromQuery] int? size,[FromQuery] string? order,CancellationToken cancellationToken = default)
     {
-        var request = new GetListSaleQuery(page,size,order);
+        var request = new GetListSaleQuery(new Guid(GetCurrentUserId()),page,size,order);
 
         var response = await _mediator.Send(request, cancellationToken);
 

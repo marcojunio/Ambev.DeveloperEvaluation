@@ -1,10 +1,12 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Product.GetProduct;
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Product.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -20,7 +22,7 @@ public class GetProductHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _productRepository = Substitute.For<IProductRepository>();
-        _getProductHandler = new GetProductHandler(_productRepository, _mapper);
+        _getProductHandler = new GetProductHandler(_productRepository, _mapper,Substitute.For<ICacheService>());
     }
     
     

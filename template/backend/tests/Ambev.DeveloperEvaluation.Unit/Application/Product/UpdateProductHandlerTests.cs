@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Product.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class UpdateProductHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _productRepository = Substitute.For<IProductRepository>();
-        _handler = new UpdateProductHandler(_productRepository, _mapper);
+        _handler = new UpdateProductHandler(_productRepository, _mapper,Substitute.For<IMediator>());
     }
 
     [Fact(DisplayName = "Should update with success a product")]

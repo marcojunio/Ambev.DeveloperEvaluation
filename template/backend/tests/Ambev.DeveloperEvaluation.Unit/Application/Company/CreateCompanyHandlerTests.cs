@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Company.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class CreateCompanyHandlerTests
     {
         _companyRepository = Substitute.For<ICompanyRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new CreateCompanyHandler(_companyRepository, _mapper);
+        _handler = new CreateCompanyHandler(_companyRepository, _mapper,Substitute.For<IMediator>());
     }
     
     [Fact(DisplayName = "Given valid company data When creating user Then returns success response")]

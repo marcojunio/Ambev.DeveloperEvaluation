@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Product.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class CreateProductHandlerTests
     {
         _productRepository = Substitute.For<IProductRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new CreateProductHandler(_productRepository, _mapper);
+        _handler = new CreateProductHandler(_productRepository, _mapper,Substitute.For<IMediator>());
     }
 
     [Fact(DisplayName = "Given valid product data When creating user Then returns success response")]

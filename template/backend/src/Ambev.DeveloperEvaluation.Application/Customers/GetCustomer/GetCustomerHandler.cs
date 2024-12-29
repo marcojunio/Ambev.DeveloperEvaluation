@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -10,12 +11,14 @@ public class GetCustomerHandler : IRequestHandler<GetCustomerQuery, GetCustomerR
 {
     private readonly ICustomerRepository _companyRepository;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
     public GetCustomerHandler(
-        ICustomerRepository companyRepository, IMapper mapper)
+        ICustomerRepository companyRepository, IMapper mapper, ICacheService cacheService)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<GetCustomerResult> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class GetCustomerHandler : IRequestHandler<GetCustomerQuery, GetCustomerR
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var result = await _companyRepository.GetByIdAsync(request.Id, cancellationToken);
+        var result = await _cacheService.GetOrCreateAsync(CacheKeys.GetCustomerKey(request.Id),async () => await _companyRepository.GetByIdAsync(request.Id, cancellationToken));
 
         if (result == null)
             throw new NotFoundException($"Customer with ID {request.Id} not found");

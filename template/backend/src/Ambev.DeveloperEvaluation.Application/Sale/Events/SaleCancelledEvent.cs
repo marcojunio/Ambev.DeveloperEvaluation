@@ -7,7 +7,7 @@ public record SaleCancelledEvent(Domain.Entities.Sale Sale) : IDomainEvent;
 
 public class SaleCancelledEventHandler : IDomainEventHandler<SaleCancelledEvent>
 {
-    private ILogger<SaleCancelledEventHandler> _logger;
+    private readonly ILogger<SaleCancelledEventHandler> _logger;
 
     public SaleCancelledEventHandler(ILogger<SaleCancelledEventHandler> logger)
     {

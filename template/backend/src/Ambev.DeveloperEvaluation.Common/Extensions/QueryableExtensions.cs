@@ -36,7 +36,7 @@ public static class QueryableExtensions
     {
         var parameter = Expression.Parameter(typeof(T), "x");
         
-        var property = propertyPath.Split('.').Aggregate<string?, Expression>(parameter, Expression.PropertyOrField);
+        var property = propertyPath.Split('.').Aggregate<string?, Expression>(parameter, Expression.PropertyOrField!);
 
         var keySelector = Expression.Lambda(property, parameter);
 

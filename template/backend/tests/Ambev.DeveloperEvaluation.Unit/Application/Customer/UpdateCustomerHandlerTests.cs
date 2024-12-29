@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Customer.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class UpdateCustomerHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _customerRepository = Substitute.For<ICustomerRepository>();
-        _handler = new UpdateCustomerHandler(_customerRepository, _mapper);
+        _handler = new UpdateCustomerHandler(_customerRepository, _mapper,Substitute.For<IMediator>());
     }
 
     [Fact(DisplayName = "Should update with success a customer")]

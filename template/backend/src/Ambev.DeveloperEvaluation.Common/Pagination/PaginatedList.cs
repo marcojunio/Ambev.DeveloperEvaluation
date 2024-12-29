@@ -2,6 +2,11 @@
 
 public class PaginatedList<T> : List<T>
 {
+    public PaginatedList()
+    {
+        
+    }
+    
     public string? Order { get; set; }
 
     public int? PageSize { get; private set; }

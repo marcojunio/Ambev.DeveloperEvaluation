@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -10,12 +11,14 @@ public class GetProductHandler : IRequestHandler<GetProductQuery, GetProductResu
 {
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
     public GetProductHandler(
-        IProductRepository productRepository, IMapper mapper)
+        IProductRepository productRepository, IMapper mapper, ICacheService cacheService)
     {
         _productRepository = productRepository;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<GetProductResult> Handle(GetProductQuery request, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class GetProductHandler : IRequestHandler<GetProductQuery, GetProductResu
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var result = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        var result = await _cacheService.GetOrCreateAsync(CacheKeys.GetProductKey(request.Id),async () => await _productRepository.GetByIdAsync(request.Id, cancellationToken));
 
         if (result == null)
             throw new NotFoundException($"Product with ID {request.Id} not found");

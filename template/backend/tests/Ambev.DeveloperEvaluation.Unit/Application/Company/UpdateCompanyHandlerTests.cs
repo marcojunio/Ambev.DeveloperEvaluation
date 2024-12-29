@@ -5,6 +5,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Company.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -20,7 +21,9 @@ public class UpdateCompanyHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _companyRepository = Substitute.For<ICompanyRepository>();
-        _handler = new UpdateCompanyHandler(_companyRepository, _mapper);
+        var mediator = Substitute.For<IMediator>();
+
+        _handler = new UpdateCompanyHandler(_companyRepository, _mapper, mediator);
     }
 
     [Fact(DisplayName = "Should update with success a company")]

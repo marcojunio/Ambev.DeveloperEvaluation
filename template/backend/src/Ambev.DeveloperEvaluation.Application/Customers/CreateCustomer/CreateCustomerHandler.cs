@@ -1,4 +1,5 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Application.Customers.Events;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -11,11 +12,13 @@ public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Crea
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
-    public CreateCustomerHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public CreateCustomerHandler(ICustomerRepository customerRepository, IMapper mapper, IMediator mediator)
     {
         _customerRepository = customerRepository;
         _mapper = mapper;
+        _mediator = mediator;
     }
 
     public async Task<CreateCustomerResult> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Crea
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var customer = await _customerRepository.GetByNameAsync(request.UserId,request.Name, cancellationToken);
+        var customer = await _customerRepository.GetByNameAsync(request.UserId, request.Name, cancellationToken);
 
         if (customer is not null)
             throw new InvalidDomainOperation($"Customer with name {request.Name} already exists");
@@ -35,8 +38,8 @@ public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Crea
 
         var createdCustomer = await _customerRepository.CreateAsync(data, cancellationToken);
 
-        var result = _mapper.Map<CreateCustomerResult>(createdCustomer);
+        await _mediator.Publish(new CustomerCreatedEvent(createdCustomer), cancellationToken);
 
-        return result;
+        return _mapper.Map<CreateCustomerResult>(createdCustomer);
     }
 }

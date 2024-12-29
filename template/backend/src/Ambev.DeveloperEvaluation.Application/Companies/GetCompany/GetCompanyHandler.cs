@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -10,12 +11,14 @@ public class GetCompanyHandler : IRequestHandler<GetCompanyQuery, GetCompanyResu
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
     public GetCompanyHandler(
-        ICompanyRepository companyRepository, IMapper mapper)
+        ICompanyRepository companyRepository, IMapper mapper, ICacheService cacheService)
     {
         _companyRepository = companyRepository;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<GetCompanyResult> Handle(GetCompanyQuery request, CancellationToken cancellationToken)
@@ -26,7 +29,7 @@ public class GetCompanyHandler : IRequestHandler<GetCompanyQuery, GetCompanyResu
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var result = await _companyRepository.GetByIdAsync(request.Id, cancellationToken);
+        var result = await _cacheService.GetOrCreateAsync(CacheKeys.GetCompanyKey(request.Id),async () => await _companyRepository.GetByIdAsync(request.Id, cancellationToken));
 
         if (result == null)
             throw new NotFoundException($"Company with ID {request.Id} not found");

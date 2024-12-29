@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Unit.Application.Customer.TestData;
 using AutoMapper;
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class CreateCustomerHandlerTests
     {
         _customerRepository = Substitute.For<ICustomerRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new CreateCustomerHandler(_customerRepository, _mapper);
+        _handler = new CreateCustomerHandler(_customerRepository, _mapper,Substitute.For<IMediator>());
     }
 
     [Fact(DisplayName = "Given valid customer data When creating user Then returns success response")]

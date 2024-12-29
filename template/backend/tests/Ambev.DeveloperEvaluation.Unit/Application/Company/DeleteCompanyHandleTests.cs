@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Company.TestData;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class DeleteCompanyHandleTests
     {
         _mapper = Substitute.For<IMapper>();
         _companyRepository = Substitute.For<ICompanyRepository>();
-        _deleteCompanyHandler = new DeleteCompanyHandler(_companyRepository);
+        _deleteCompanyHandler = new DeleteCompanyHandler(_companyRepository,Substitute.For<IMediator>());
     }
 
 

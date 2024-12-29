@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Product.TestData;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
 using NSubstitute;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class DeleteProductHandleTests
     {
         _mapper = Substitute.For<IMapper>();
         _productRepository = Substitute.For<IProductRepository>();
-        _deleteProductHandler = new DeleteProductHandler(_productRepository);
+        _deleteProductHandler = new DeleteProductHandler(_productRepository,Substitute.For<IMediator>());
     }
 
 

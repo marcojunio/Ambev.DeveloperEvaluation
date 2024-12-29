@@ -75,10 +75,11 @@ public class SaleRepository : ISaleRepository
         return true;
     }
 
-    public async Task<PaginatedList<Sale>> SearchAsync(int pageNumber, int pageSize, string order,
+    public async Task<PaginatedList<Sale>> SearchAsync(Guid userId,int pageNumber, int pageSize, string order,
         CancellationToken cancellationToken = default)
     {
         return await _defaultContext.Sales
+            .Where(s => s.UserId == userId)
             .Include(f => f.Customer)
             .Include(f => f.Items)
             .ThenInclude(f => f.Product)

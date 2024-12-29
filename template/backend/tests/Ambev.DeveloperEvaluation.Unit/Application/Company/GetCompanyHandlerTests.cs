@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Companies.GetCompany;
+using Ambev.DeveloperEvaluation.Common.Cache;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.Company.TestData;
@@ -20,7 +21,7 @@ public class GetCompanyHandlerTests
     {
         _mapper = Substitute.For<IMapper>();
         _companyRepository = Substitute.For<ICompanyRepository>();
-        _getCompanyHandler = new GetCompanyHandler(_companyRepository, _mapper);
+        _getCompanyHandler = new GetCompanyHandler(_companyRepository, _mapper,Substitute.For<ICacheService>());
     }
     
     
