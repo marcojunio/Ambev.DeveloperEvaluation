@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functional", "Functional", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.ORM", "src\Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj", "{B62C8404-A5FA-4D58-9398-1E3C55C28D14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ambev.DeveloperEvaluation.Cache", "src\Ambev.DeveloperEvaluation.Cache\Ambev.DeveloperEvaluation.Cache.csproj", "{E2831ADE-81B0-4169-9E25-A0EAFD547F60}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.Application", "src\Ambev.DeveloperEvaluation.Application\Ambev.DeveloperEvaluation.Application.csproj", "{80CED839-FE4A-4286-9403-252D230BA2A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ambev.DeveloperEvaluation.Domain", "src\Ambev.DeveloperEvaluation.Domain\Ambev.DeveloperEvaluation.Domain.csproj", "{B19079B3-A9DD-4408-9ED2-899D735C66BF}"
@@ -53,8 +55,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ambev.DeveloperEvaluation.Cache", "Ambev.DeveloperEvaluation.Cache\Ambev.DeveloperEvaluation.Cache.csproj", "{E2831ADE-81B0-4169-9E25-A0EAFD547F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
