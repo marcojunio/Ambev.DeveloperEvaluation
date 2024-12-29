@@ -3,17 +3,9 @@
 public class CacheKeys
 {
     private const string SaleKeyPrefix = "Sale:";
-    public const string AllSalesKey = "AllSales:";
-
-
-    private const string CustomerKeyPrefix = "Customer:";
-    private const string CompanyKeyPrefix = "Company:";
-    private const string ProductKeyPrefix = "Product:";
+    private const string AllSalesKey = "AllSales:";
 
     public static string GetSaleKey(Guid saleId) => $"{SaleKeyPrefix}{saleId}";
-    public static string GetCustomerKey(Guid customer) => $"{CustomerKeyPrefix}{customer}";
-    public static string GetProductKey(Guid productId) => $"{ProductKeyPrefix}{productId}";
-    public static string GetCompanyKey(Guid customerId) => $"{CompanyKeyPrefix}{customerId}";
 
     public static string GetAllSalesPrefix(Guid userId) =>
         $"{AllSalesKey}User:{userId}";

@@ -160,7 +160,7 @@ public class SalesController : BaseController
     /// <returns>Cancel sale</returns>
     [HttpPut("Cancel/{id}")]
     [Authorize]
-    [ProducesResponseType(typeof(ApiResponseWithData<UpdateSaleResult>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponseWithData<CancelSaleResult>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CancelSale([FromRoute] Guid id,
