@@ -138,7 +138,6 @@ Response:
 
 ```json
 { 
-   {
    "success": true,
    "message": "string",
    "errors": [
@@ -147,7 +146,6 @@ Response:
          "detail": "string"
       }
    ]
-   }
 } 
 ```
 
@@ -195,7 +193,7 @@ Request:
 {
   "saleItems": [
     {
-      "productId": "string",
+      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "quantity": 0,
       "unitPrice": 0
     }
@@ -236,7 +234,7 @@ Request:
   "saleItems": [
     {
       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "productId": "string",
+      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "quantity": 0,
       "unitPrice": 0
     }
@@ -259,14 +257,17 @@ Response:
   "data": {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "sellingCompanyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "saleNumber": "string",
     "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "isCancelled": true,
     "amount": 0,
-    "createdAt": "2024-12-29T11:54:54.520Z",
-    "updatedAt": "2024-12-29T11:54:54.520Z",
+    "createdAt": "2024-12-29T14:43:17.863Z",
+    "updatedAt": "2024-12-29T14:43:17.863Z",
     "saleItems": [
       {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantity": 0,
         "discount": 0,
         "unitPrice": 0
@@ -293,14 +294,17 @@ Response:
   "data": {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "sellingCompanyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "saleNumber": "string",
     "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "isCancelled": true,
     "amount": 0,
-    "createdAt": "2024-12-29T11:56:51.298Z",
-    "updatedAt": "2024-12-29T11:56:51.298Z",
+    "createdAt": "2024-12-29T14:44:04.654Z",
+    "updatedAt": "2024-12-29T14:44:04.654Z",
     "saleItems": [
       {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantity": 0,
         "discount": 0,
         "unitPrice": 0
@@ -330,14 +334,17 @@ Response:
   "data": {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "sellingCompanyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "saleNumber": "string",
     "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "isCancelled": true,
     "amount": 0,
-    "createdAt": "2024-12-29T11:57:30.307Z",
-    "updatedAt": "2024-12-29T11:57:30.307Z",
+    "createdAt": "2024-12-29T14:44:28.708Z",
+    "updatedAt": "2024-12-29T14:44:28.708Z",
     "saleItems": [
       {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantity": 0,
         "discount": 0,
         "unitPrice": 0

@@ -6,6 +6,8 @@ public class UpdateSaleResult
 {
     public Guid Id { get; set; }
     public Guid SellingCompanyId { get; set; }
+    public Guid CustomerId { get; set; }
+    public string SaleNumber { get; set; } = string.Empty;
     public Guid UserId { get; set; }
     public bool IsCancelled { get; set; }
     public decimal Amount { get; set; }

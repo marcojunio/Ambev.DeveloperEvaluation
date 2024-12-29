@@ -14,6 +14,8 @@ COPY ["src/Ambev.DeveloperEvaluation.Common/Ambev.DeveloperEvaluation.Common.csp
 COPY ["src/Ambev.DeveloperEvaluation.Domain/Ambev.DeveloperEvaluation.Domain.csproj", "src/Ambev.DeveloperEvaluation.Domain/"]
 COPY ["src/Ambev.DeveloperEvaluation.IoC/Ambev.DeveloperEvaluation.IoC.csproj", "src/Ambev.DeveloperEvaluation.IoC/"]
 COPY ["src/Ambev.DeveloperEvaluation.ORM/Ambev.DeveloperEvaluation.ORM.csproj", "src/Ambev.DeveloperEvaluation.ORM/"]
+COPY ["src/Ambev.DeveloperEvaluation.Cache/Ambev.DeveloperEvaluation.Cache.csproj", "src/Ambev.DeveloperEvaluation.Cache/"]
+COPY ["src/Ambev.DeveloperEvaluation.MessagingBroker/Ambev.DeveloperEvaluation.MessagingBroker.csproj", "src/Ambev.DeveloperEvaluation.MessagingBroker/"]
 RUN dotnet restore "./src/Ambev.DeveloperEvaluation.WebApi/Ambev.DeveloperEvaluation.WebApi.csproj"
 COPY . .
 WORKDIR "/src/src/Ambev.DeveloperEvaluation.WebApi"

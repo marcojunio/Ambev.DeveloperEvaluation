@@ -14,5 +14,9 @@ public class SaleItemDtoValidator : AbstractValidator<SaleItemDto>
         RuleFor(e => e.ProductId)
             .NotEmpty()
             .WithMessage("Product is required");
+        
+        RuleFor(e => e.UnitPrice)
+            .NotNull().WithMessage("Quantity is required")
+            .GreaterThan(0).WithMessage("Unit price should be greater than zero");
     }
 }
